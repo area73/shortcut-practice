@@ -25,15 +25,6 @@ const commonKeysFromMapAndKeyboardEvent =
       []
     );
   };
-/*
-const mock = {
-  altKey: false,
-  ctrlKey: true,
-  key: 'a',
-  metaKey: false,
-  shiftKey: false,
-} as KeyboardEvent;
-*/
 
 const specialKeys = commonKeysFromMapAndKeyboardEvent(specialKeyMap);
 
@@ -49,7 +40,6 @@ export default function useKeyPress() {
   const [keyPressed, setKeyPressed] = useState<string[] | undefined>(undefined);
 
   const downHandler = (kev: KeyboardEvent) => {
-    // console.log(kev);
     setKeyPressed(
       isSpecialKey(kev.key) ? undefined : composeWithSpecialKeys(kev)
     );

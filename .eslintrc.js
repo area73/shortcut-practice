@@ -5,6 +5,18 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     // Since React 17 and typescript 4.1 you can safely disable the rule
     'react/react-in-jsx-scope': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
+    'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: true,
+        allowTernary: true,
+        enforceForJSX: true,
+        allowTaggedTemplates: false,
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2020,

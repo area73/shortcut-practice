@@ -4,7 +4,7 @@ import useKeyPress from './useKeyPress';
 
 import mockData, { ShortcutAnswered } from '../mock/shortcuts';
 
-export type States = 'error' | 'success' | 'inProgress';
+export type States = 'error' | 'success' | 'inProgress' | 'done';
 
 export default function ShortCutPractice() {
   // TODO: use useQuery to fetch the data

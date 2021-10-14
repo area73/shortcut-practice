@@ -20,7 +20,7 @@ export default function ShortCutPractice() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [pressedKeys, setPressedKeys] = useState<string[][]>([]);
   const [answers, setAnswers] = useState<ShortcutAnswered[]>([]);
-  const [componentState, setComponentState] = useState<States>('inProgress');
+  const [, setComponentState] = useState<States>('inProgress');
   const keyPressed = useKeyPress();
 
   const question = mockData[questionIndex];
@@ -56,53 +56,37 @@ export default function ShortCutPractice() {
     }
   }, [error, success]);
 
-  console.log(
-    '\x1b[35m%s\x1b[0m',
-    'keyPressed',
-    keyPressed,
-    'pressedKeys',
-    pressedKeys,
-    success,
-    error,
-    componentState
-  );
-
   return (
-    <div>
-      <h1>ShortCutPractice</h1>
-      <p>{question.section}</p>
-      <p>{question.description}</p>
-      <p>{question.note}</p>
-      <p>{question.keyStrokes}</p>
-
+    <>
+      <div>
+        <p>{question.section}</p>
+        <p>{question.description}</p>
+        <p>{question.note}</p>
+        <p>{question.keyStrokes}</p>
+      </div>
       <div className="answers" style={{ overflow: 'auto', height: '400px' }}>
         {answers
-          .map(
-            (
-              answer,
-              idx // FIXME: how to get uniqyue idx
-            ) => (
-              <div
-                key={answer.id + idx}
-                style={{
-                  border: '1px solid #000',
-                  backgroundColor:
-                    JSON.stringify(answer.keyStrokes) ===
-                    JSON.stringify(answer.typedKeyStrokes)
-                      ? '#0f0'
-                      : '#f00',
-                }}
-              >
-                <p>section: {answer.section}</p>
-                <p>description: {answer.description}</p>
-                <p>note: {answer.note}</p>
-                <p>keyStrokes: {answer.keyStrokes}</p>
-                <p>typedKeyStrokes: {answer.typedKeyStrokes}</p>
-              </div>
-            )
-          )
+          .map((answer) => (
+            <div
+              key={answer.id}
+              style={{
+                border: '1px solid #000',
+                backgroundColor:
+                  JSON.stringify(answer.keyStrokes) ===
+                  JSON.stringify(answer.typedKeyStrokes)
+                    ? '#0f0'
+                    : '#f00',
+              }}
+            >
+              <p>section: {answer.section}</p>
+              <p>description: {answer.description}</p>
+              <p>note: {answer.note}</p>
+              <p>keyStrokes: {answer.keyStrokes}</p>
+              <p>typedKeyStrokes: {answer.typedKeyStrokes}</p>
+            </div>
+          ))
           .reverse()}
       </div>
-    </div>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 // import React from 'react';
+import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.global.css';
@@ -6,20 +7,27 @@ import Configure from './features/Configure.page';
 import ShortCutPractice from './features/ShortCutPractice.page';
 
 const EntryPage = () => {
+  const [active, setActive] = useState<string>('configure');
   return (
     <div>
       <div className="Hello">
-        <Link to="/practice">
-          <button type="button">
+        <Link to="/practice" onClick={() => setActive('practice')}>
+          <button
+            type="button"
+            className={active === 'practice' ? 'active' : undefined}
+          >
             <span role="img" aria-label="practice">
               🧠
             </span>
             Practice shortcuts
           </button>
         </Link>
-        <Link to="/configure">
-          <button type="button">
-            <span role="img" aria-label="practice">
+        <Link to="/configure" onClick={() => setActive('configure')}>
+          <button
+            type="button"
+            className={active === 'configure' ? 'active' : undefined}
+          >
+            <span role="img" aria-label="configure">
               🔧
             </span>
             Configure shortcuts

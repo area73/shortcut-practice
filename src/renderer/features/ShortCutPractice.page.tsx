@@ -59,6 +59,9 @@ export default function ShortCutPractice() {
   return (
     <>
       <div>
+        <p>
+          {questionIndex + 1} / {mockData.length}
+        </p>
         <p>{question.section}</p>
         <p>{question.description}</p>
         <p>{question.note}</p>

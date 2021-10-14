@@ -2,80 +2,58 @@ import { useEffect, useState } from 'react';
 import { sameLength, hasSameKeys } from '../common/utils';
 import useKeyPress from './useKeyPress';
 
+import mockData, { ShortcutAnswered } from '../mock/shortcuts';
+
+export type States = 'error' | 'success' | 'inProgress';
+
 export default function ShortCutPractice() {
-  const { description, note, keyStrokes, section } = mockData[0];
+  // TODO: use useQuery to fetch the data
+  /*
+  // Access the client
+  const queryClient = useQueryClient();
+
+  const { isLoading, error, data } = useQuery('shortcutsData', () =>
+    fetch('../mock/shortcuts.ts').then((res) => res.json())
+  );
+  */
+
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [pressedKeys, setPressedKeys] = useState<string[][]>([]);
-  const [answers, setAnswers] = useState<string[]>([]);
-
-  const [componentState, setComponentState] = useState<
-    'error' | 'success' | 'inProgress'
-  >('inProgress');
-
+  const [answers, setAnswers] = useState<ShortcutAnswered[]>([]);
+  const [componentState, setComponentState] = useState<States>('inProgress');
   const keyPressed = useKeyPress();
 
-  const success =
-    sameLength(pressedKeys, keyStrokes) && hasSameKeys(pressedKeys, keyStrokes);
+  const question = mockData[questionIndex];
 
-  const error = !hasSameKeys(pressedKeys, keyStrokes);
+  const error = !hasSameKeys(pressedKeys, question.keyStrokes);
+
+  // error && setQuestionIndex(questionIndex + 1);
+
+  const success =
+    sameLength(pressedKeys, question.keyStrokes) &&
+    hasSameKeys(pressedKeys, question.keyStrokes);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    console.log(
-      'keyPressed EFFECT',
-      keyPressed,
-      'pressedKeys',
-      pressedKeys,
-      success,
-      error,
-      componentState
-    );
-
-    if (keyPressed) {
-      setPressedKeys([...pressedKeys, keyPressed]);
-    }
+    keyPressed && setPressedKeys([...pressedKeys, keyPressed]);
   }, [keyPressed]);
 
   useEffect(() => {
     if (error) {
       setComponentState('error');
       setPressedKeys([]);
-      setAnswers([...answers, `ERROR ${pressedKeys} / ${keyStrokes}`]);
+      setQuestionIndex(questionIndex + 1);
+      setAnswers([...answers, { ...question, typedKeyStrokes: pressedKeys }]);
     }
     if (success) {
       setComponentState('success');
-      setAnswers([...answers, `CORRECTO ${pressedKeys}`]);
+      setQuestionIndex(questionIndex + 1);
+      setAnswers([...answers, { ...question, typedKeyStrokes: pressedKeys }]);
       setPressedKeys([]);
     }
     if (!error && !success) {
       setComponentState('inProgress');
     }
-
-    console.info(
-      'keyPressed EFFECT ERROR',
-      keyPressed,
-      'pressedKeys',
-      pressedKeys,
-      success,
-      error,
-      componentState
-    );
-
-    /*
-    return () => {
-      console.info(
-        'keyPressed EFFECT ERROR AFTER',
-        keyPressed,
-        'pressedKeys',
-        pressedKeys,
-        success,
-        error,
-        componentState
-      );
-      if (error || success) {
-        setPressedKeys([]);
-      }
-    };
-    */
   }, [error, success]);
 
   console.log(
@@ -89,36 +67,42 @@ export default function ShortCutPractice() {
     componentState
   );
 
-  // success && setComponentState('success');
-  // error && setComponentState('error');
-  /*
-  const success =
-    sameLength(pressedKeys, keyStrokes) && hasSameKeys(pressedKeys, keyStrokes);
-
-  const error = !hasSameKeys(pressedKeys, keyStrokes);
-
-  if (error || success) {
-    setComponentState(success ? 'success' : 'error');
-  } else {
-    setComponentState('inProgress');
-  }
-  */
-
   return (
     <div>
       <h1>ShortCutPractice</h1>
-      <p>{section}</p>
-      <p>{description}</p>
-      <p>{note}</p>
-      <p>{keyStrokes}</p>
+      <p>{question.section}</p>
+      <p>{question.description}</p>
+      <p>{question.note}</p>
+      <p>{question.keyStrokes}</p>
 
-      <p>{componentState === 'success' && '👍'}</p>
-      <p>{componentState === 'error' && '👎'}</p>
-      <p>{componentState === 'inProgress' && '🏃'}</p>
-
-      {answers.map((answer, idx) => (
-        <p key={idx}>{answer}</p>
-      ))}
+      <div className="answers" style={{ overflow: 'auto', height: '400px' }}>
+        {answers
+          .map(
+            (
+              answer,
+              idx // FIXME: how to get uniqyue idx
+            ) => (
+              <div
+                key={answer.id + idx}
+                style={{
+                  border: '1px solid #000',
+                  backgroundColor:
+                    JSON.stringify(answer.keyStrokes) ===
+                    JSON.stringify(answer.typedKeyStrokes)
+                      ? '#0f0'
+                      : '#f00',
+                }}
+              >
+                <p>section: {answer.section}</p>
+                <p>description: {answer.description}</p>
+                <p>note: {answer.note}</p>
+                <p>keyStrokes: {answer.keyStrokes}</p>
+                <p>typedKeyStrokes: {answer.typedKeyStrokes}</p>
+              </div>
+            )
+          )
+          .reverse()}
+      </div>
     </div>
   );
 }

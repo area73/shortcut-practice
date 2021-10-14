@@ -1,4 +1,5 @@
 // import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.global.css';
 import Configure from './features/Configure.page';
@@ -29,18 +30,23 @@ const EntryPage = () => {
   );
 };
 
+// Create a client
+const queryClient = new QueryClient();
+
 export default function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={EntryPage} />
-      </Switch>
-      <Switch>
-        <Route path="/practice" component={ShortCutPractice} />
-      </Switch>
-      <Switch>
-        <Route path="/configure" component={Configure} />
-      </Switch>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Switch>
+          <Route path="/" component={EntryPage} />
+        </Switch>
+        <Switch>
+          <Route path="/practice" component={ShortCutPractice} />
+        </Switch>
+        <Switch>
+          <Route path="/configure" component={Configure} />
+        </Switch>
+      </Router>
+    </QueryClientProvider>
   );
 }

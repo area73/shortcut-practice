@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { sameLength, hasSameKeys } from '../common/utils';
 import useKeyPress from './useKeyPress';
 import mockData, { ShortcutAnswered } from '../mock/shortcuts';
+import MaybeBlock from './MaybeBlock';
 
 export type States = 'error' | 'success' | 'inProgress' | 'done';
 
@@ -64,10 +65,10 @@ export default function ShortCutPractice() {
         <p>
           {questionIndex + 1} / {mockData.length}
         </p>
-        <p>{question.section}</p>
-        <p>{question.description}</p>
-        <p>{question.note}</p>
-        <p>{question.keyStrokes}</p>
+        <MaybeBlock>{question.section}</MaybeBlock>
+        <MaybeBlock>{question.description}</MaybeBlock>
+        <MaybeBlock>{question.note}</MaybeBlock>
+        <MaybeBlock>{question.keyStrokes}</MaybeBlock>
       </div>
       <div className="answers" style={{ overflow: 'auto', height: '400px' }}>
         {answers

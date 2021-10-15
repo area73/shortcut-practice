@@ -14,7 +14,7 @@ const mockData: Shortcut[] = [
   {
     id: '0',
     description: 'Keyboard TEST',
-    note: '',
+    note: 'esto son unas notas',
     keyStrokes: [['KeyK'], ['KeyS']],
     section: 'General',
   },

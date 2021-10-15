@@ -4,9 +4,6 @@ import { specialKeyMap } from '../model/keyMapper';
 
 const isSpecialKey = (key: string) => specialKeyMap.has(key);
 
-isSpecialKey('Meta'); // ?
-// const keyboardToSymbol = (key: string) => specialKeyMap.get(key);
-
 // keysFromMap :: Map -> string[]
 const keysFromMap = (mapObj: Map<string, string>) => Array.from(mapObj.keys());
 const toLowerCase = (str: string) => str.toLowerCase();

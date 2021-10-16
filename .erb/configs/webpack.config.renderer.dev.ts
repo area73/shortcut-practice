@@ -10,6 +10,7 @@ import webpackPaths from './webpack.paths';
 import checkNodeEnv from '../scripts/check-node-env';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
+
 // When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
 // at the dev webpack config is not accidentally run in a production environment
 if (process.env.NODE_ENV === 'production') {
@@ -75,6 +76,9 @@ export default merge(baseConfig, {
               sourceMap: true,
             },
           },
+          {
+            loader:'postcss-loader',
+          }
         ],
       },
       {
@@ -93,6 +97,9 @@ export default merge(baseConfig, {
               importLoaders: 1,
             },
           },
+          {
+            loader:'postcss-loader',
+          }
         ],
       },
       // SASS support - compile all .global.scss files and pipe it to style.css
@@ -111,6 +118,9 @@ export default merge(baseConfig, {
           {
             loader: 'sass-loader',
           },
+          {
+            loader:'postcss-loader',
+          }
         ],
       },
       // SASS support - compile all other .scss files and pipe it to style.css
@@ -136,6 +146,9 @@ export default merge(baseConfig, {
           {
             loader: 'sass-loader',
           },
+          {
+            loader:'postcss-loader',
+          }
         ],
       },
       // WOFF Font

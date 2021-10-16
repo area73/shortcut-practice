@@ -19,7 +19,7 @@ const QuestionBlock: FC<Question> = ({
   keyStrokes,
 }) => {
   return (
-    <div className="questionBlock">
+    <div className="questionBlock shadow-lg box-content h-32 w-32 p-4 border-4 ">
       <MaybeBlock className="questionBlock_pager">{pager}</MaybeBlock>
       <MaybeBlock className="questionBlock_section">{section}</MaybeBlock>
       <MaybeBlock className="questionBlock_description">

@@ -91,38 +91,20 @@
     "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
   },
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
-  },
-  "contributors": [
-    {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
-    },
-    {
-      "name": "John Tran",
-      "email": "jptran318@gmail.com",
-      "url": "https://github.com/jooohhn"
-    }
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
+    "name": "Rodrigo Erades",
+    "email": "rerades@siete3.com",
+    "url": "http://www.siete3.com/"
   },
   "keywords": [
     "electron",
-    "boilerplate",
     "react",
     "typescript",
     "ts",
     "sass",
     "webpack",
-    "hot",
     "reload"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/area73/shortcut-practice",
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",
@@ -169,6 +151,7 @@
     "@types/react-test-renderer": "^17.0.1",
     "@types/terser-webpack-plugin": "^5.0.4",
     "@types/webpack-env": "^1.16.2",
+    "autoprefixer": "^10.3.7",
     "browserslist-config-erb": "^0.0.3",
     "chalk": "^4.1.2",
     "concurrently": "^6.3.0",
@@ -195,6 +178,8 @@
     "lint-staged": "^11.2.0",
     "mini-css-extract-plugin": "^2.3.0",
     "opencollective-postinstall": "^2.0.3",
+    "postcss": "^8.3.9",
+    "postcss-loader": "^6.2.0",
     "prettier": "^2.4.1",
     "react-refresh": "^0.10.0",
     "react-refresh-typescript": "^2.0.2",
@@ -203,6 +188,7 @@
     "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
+    "tailwindcss": "^2.2.17",
     "terser-webpack-plugin": "^5.2.4",
     "ts-jest": "^27.0.5",
     "ts-loader": "^9.2.6",
@@ -250,6 +236,12 @@
       }
     ],
     "singleQuote": true
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {},
+      "autoprefixer": {}
+    }
   },
   "husky": {
     "hooks": {

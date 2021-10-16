@@ -3,6 +3,7 @@ import { sameLength, hasSameKeys } from '../common/utils';
 import useKeyPress from './useKeyPress';
 import mockData, { ShortcutAnswered } from '../mock/shortcuts';
 import MaybeBlock from './MaybeBlock';
+import QuestionBlock from './QuestionBlock';
 
 export type States = 'error' | 'success' | 'inProgress' | 'done';
 
@@ -70,6 +71,12 @@ export default function ShortCutPractice() {
         <MaybeBlock>{question.note}</MaybeBlock>
         <MaybeBlock>{question.keyStrokes}</MaybeBlock>
       </div>
+      <QuestionBlock
+        description={question.description}
+        section={question.section}
+        pager={`${questionIndex + 1} / ${mockData.length}`}
+        note={question.note}
+      />
       <div className="answers" style={{ overflow: 'auto', height: '400px' }}>
         {answers
           .map((answer) => (

@@ -1,5 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Either";
-import { flow } from "fp-ts/lib/function";
+import { flow } from 'fp-ts/function';
+import { map, reduce } from 'ramda';
 
 const specialKeyMap = new Map<string, string>()
   .set('Shift', '⇧')
@@ -7,19 +7,29 @@ const specialKeyMap = new Map<string, string>()
   .set('Control', '⌃')
   .set('Meta', '⌘');
 
+// getMap :: Map<A,A> -> A -> A | undefined
+const getMap =
+  (keyMap: Map<string, string>) =>
+  (compare: string): string =>
+    keyMap.get(compare) || compare;
 
+const getValueFromSpecialKeyMap = getMap(specialKeyMap);
+const replace = (subStr: string, replacer: string) => (str: string) =>
+  str.replace(new RegExp(subStr, 'gi'), replacer);
 
-  // getMap :: Map<A,A> -> A -> A | undefined
-  const getMap = (keyMap: Map<unknown, unknown>) => (compare: unknown): unknown | undefined =>
-  keyMap.get(compare);
+const removeKey = replace('Key', '');
+const removeDigit = replace('Digit', '');
 
-  const getValueFromSpecialKeyMap = getMap(specialKeyMap);
+const combine = (xs: string[]) => reduce((a, b) => a + b, '', xs);
+const joinWithComa = (xs: string[]) => xs.join(',');
 
- export const keyFormatted = (key:unknown) => flow(
-    getValueFromSpecialKeyMap,
-    fromNullable(key)
-    )(key);
+const keyFormattedGroup = (keys: string[][]) =>
+  flow(
+    map(map(getValueFromSpecialKeyMap)),
+    map(combine),
+    map(removeKey),
+    map(removeDigit),
+    joinWithComa
+  )(keys);
 
-
-
-export { specialKeyMap };
+export { specialKeyMap, keyFormattedGroup };

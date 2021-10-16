@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { sameLength, hasSameKeys } from '../common/utils';
-import useKeyPress from './useKeyPress';
+import { keyFormattedGroup } from 'renderer/model/keyMapper';
+import { hasSameKeys, sameLength } from '../common/utils';
 import mockData, { ShortcutAnswered } from '../mock/shortcuts';
-import MaybeBlock from './MaybeBlock';
 import QuestionBlock from './QuestionBlock';
+import useKeyPress from './useKeyPress';
 
 export type States = 'error' | 'success' | 'inProgress' | 'done';
 
@@ -63,20 +63,14 @@ export default function ShortCutPractice() {
   return (
     <>
       <div>
-        <p>
-          {questionIndex + 1} / {mockData.length}
-        </p>
-        <MaybeBlock>{question.section}</MaybeBlock>
-        <MaybeBlock>{question.description}</MaybeBlock>
-        <MaybeBlock>{question.note}</MaybeBlock>
-        <MaybeBlock>{question.keyStrokes}</MaybeBlock>
+        <QuestionBlock
+          description={question.description}
+          section={question.section}
+          pager={`${questionIndex + 1} / ${mockData.length}`}
+          note={question.note}
+          keyStrokes={keyFormattedGroup(question.keyStrokes)}
+        />
       </div>
-      <QuestionBlock
-        description={question.description}
-        section={question.section}
-        pager={`${questionIndex + 1} / ${mockData.length}`}
-        note={question.note}
-      />
       <div className="answers" style={{ overflow: 'auto', height: '400px' }}>
         {answers
           .map((answer) => (

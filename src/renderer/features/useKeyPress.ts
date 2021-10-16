@@ -1,4 +1,4 @@
-import { concat, prop, props, pipe, __ } from 'ramda';
+import { concat, pipe, prop, props, __ } from 'ramda';
 import { useEffect, useState } from 'react';
 import { specialKeyMap } from '../model/keyMapper';
 
@@ -37,6 +37,7 @@ export default function useKeyPress() {
   const [keyPressed, setKeyPressed] = useState<string[] | undefined>(undefined);
 
   const downHandler = (kev: KeyboardEvent) => {
+    console.log(kev);
     setKeyPressed(
       isSpecialKey(kev.key) ? undefined : composeWithSpecialKeys(kev)
     );

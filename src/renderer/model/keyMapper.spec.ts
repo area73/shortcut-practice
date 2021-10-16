@@ -1,4 +1,4 @@
-import { specialKeyMap } from './keyMapper';
+import { keyFormattedGroup, specialKeyMap } from './keyMapper';
 
 describe('keyMapper', () => {
   describe('When receiving a specialKeyMap', () => {
@@ -17,5 +17,19 @@ describe('keyMapper', () => {
     it('Should have a key for Shift', () => {
       expect(specialKeyMap.get('Shift')).not.toBeNull();
     });
+  });
+  describe('When keyFormattedGroup', () => {
+    let keyMaps: string[][];
+    beforeEach(() => {
+      keyMaps = [
+        ['metaKey', 'KeyK'],
+        ['metaKey', 'ctrKey', 'altKey', 'shiftKey', 'Digit9'],
+      ]
+    });
+
+    it('should replace metaKey with simbol', () => {
+      expect(keyFormattedGroup(keyMaps)).toBe('');
+    });
+
   });
 });

@@ -1,4 +1,7 @@
 import { FC } from 'react';
+import MaybeBlock from './MaybeBlock';
+
+import './QuestionBlock.scss';
 
 export type Question = {
   pager?: string;
@@ -8,8 +11,6 @@ export type Question = {
   keyStrokes?: string;
 };
 
-const Block = (content) => <p classN
-
 const QuestionBlock: FC<Question> = ({
   pager,
   section,
@@ -18,12 +19,14 @@ const QuestionBlock: FC<Question> = ({
   keyStrokes,
 }) => {
   return (
-    <div>
-      <p>{pager}</p>
-      <p>{section}</p>
-      <p>{description}</p>
-      <p>{note}</p>
-      <p>{keyStrokes}</p>
+    <div className="questionBlock">
+      <MaybeBlock className="questionBlock_pager">{pager}</MaybeBlock>
+      <MaybeBlock className="questionBlock_section">{section}</MaybeBlock>
+      <MaybeBlock className="questionBlock_description">
+        {description}
+      </MaybeBlock>
+      <MaybeBlock className="questionBlock_note">{note}</MaybeBlock>
+      <MaybeBlock className="questionBlock_keyStrokes">{keyStrokes}</MaybeBlock>
     </div>
   );
 };

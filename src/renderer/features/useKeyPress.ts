@@ -1,33 +1,24 @@
-import { concat, pipe, prop, props, __ } from 'ramda';
+import { filter, identity, keys, pick, pipe, prop } from 'ramda';
 import { useEffect, useState } from 'react';
-import { specialKeyMap } from '../model/keyMapper';
 
-const isSpecialKey = (key: string) => specialKeyMap.has(key);
-
-// keysFromMap :: Map -> string[]
-const keysFromMap = (mapObj: Map<string, string>) => Array.from(mapObj.keys());
-const toLowerCase = (str: string) => str.toLowerCase();
-const substitute = (str: string) => str.replace('Control', 'ctrl');
-
-const convertToKeyEvent = (str: string) =>
-  pipe(substitute, toLowerCase, concat(__, 'Key'))(str);
-
-const commonKeysFromMapAndKeyboardEvent =
-  (keysMap: Map<string, string>) => (keyEvent: KeyboardEvent) => {
-    const rawKeys = keysFromMap(keysMap); // ?
-    const keys = rawKeys.map(convertToKeyEvent); // ?
-    const values = props(keys, keyEvent as unknown as Record<string, unknown>);
-    return values.reduce<string[]>(
-      (acc, curr, idx) => (curr ? [...acc, keys[idx]] : acc),
-      []
-    );
-  };
-
-const specialKeys = commonKeysFromMapAndKeyboardEvent(specialKeyMap);
+// const isSpecialKey = (key: string) => specialKeyMap.has(key);
 
 const code = (keyEvent: KeyboardEvent) => prop('code', keyEvent);
 
+const specialKeys = pipe(
+  pick<string>(['metaKey', 'ctrlKey', 'altKey', 'shiftKey']),
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  filter<string, boolean>(identity),
+  keys
+);
+
+const isSpecialKey = (key: string) =>
+  ['Meta', 'Control', 'Alt', 'Shift'].indexOf(key) > -1;
+
 const composeWithSpecialKeys = (keyEvent: KeyboardEvent) => [
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   ...specialKeys(keyEvent),
   code(keyEvent),
 ];
@@ -37,7 +28,6 @@ export default function useKeyPress() {
   const [keyPressed, setKeyPressed] = useState<string[] | undefined>(undefined);
 
   const downHandler = (kev: KeyboardEvent) => {
-    console.log(kev);
     setKeyPressed(
       isSpecialKey(kev.key) ? undefined : composeWithSpecialKeys(kev)
     );

@@ -2,10 +2,10 @@ import { flow } from 'fp-ts/function';
 import { map, reduce } from 'ramda';
 
 const specialKeyMap = new Map<string, string>()
-  .set('Shift', '⇧')
-  .set('Alt', '⌥')
-  .set('Control', '⌃')
-  .set('Meta', '⌘');
+  .set('shiftKey', '⇧')
+  .set('altKey', '⌥')
+  .set('CtrlKey', '⌃')
+  .set('metaKey', '⌘');
 
 // getMap :: Map<A,A> -> A -> A | undefined
 const getMap =

@@ -44,7 +44,7 @@ const mockData: Shortcut[] = [
     note: '',
     keyStrokes: [
       ['metaKey', 'KeyK'],
-      ['metaKey', 'Key0'],
+      ['metaKey', 'Digit0'],
     ],
     section: 'Basic Editing',
   },

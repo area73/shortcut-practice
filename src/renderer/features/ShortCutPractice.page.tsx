@@ -29,7 +29,7 @@ export default function ShortCutPractice() {
   }, [keyPressed]);
 
   const getNextQuestion = () =>
-    questionIndex < mockData.length ? questionIndex + 1 : questionIndex;
+    questionIndex < mockData.length - 1 ? questionIndex + 1 : questionIndex;
 
   const combineAnswers = () => [
     ...answers,

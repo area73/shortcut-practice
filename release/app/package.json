@@ -9,6 +9,7 @@
     "email": "electronreactboilerplate@gmail.com",
     "url": "https://github.com/electron-react-boilerplate"
   },
+  "dependencies": {},
   "scripts": {
     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.js",

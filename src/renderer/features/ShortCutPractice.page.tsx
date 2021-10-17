@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { keyFormattedGroup } from 'renderer/model/keyMapper';
 import { hasSameKeys, sameLength } from '../common/utils';
 import mockData, { ShortcutAnswered } from '../mock/shortcuts';
 import QuestionBlock from './QuestionBlock';
@@ -64,11 +63,8 @@ export default function ShortCutPractice() {
     <>
       <div>
         <QuestionBlock
-          description={question.description}
-          section={question.section}
+          {...question}
           pager={`${questionIndex + 1} / ${mockData.length}`}
-          note={question.note}
-          keyStrokes={keyFormattedGroup(question.keyStrokes)}
         />
       </div>
       <div className="answers" style={{ overflow: 'auto', height: '400px' }}>

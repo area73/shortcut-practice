@@ -1,17 +1,15 @@
 import { FC } from 'react';
+import { Shortcut } from 'renderer/mock/shortcuts';
+import { keyFormattedGroup } from 'renderer/model/keyMapper';
 import MaybeBlock from './MaybeBlock';
 
 import './QuestionBlock.scss';
 
-export type Question = {
+export type QuestionBlockProps = Partial<Shortcut> & {
   pager?: string;
-  section?: string;
-  description: string;
-  note?: string;
-  keyStrokes?: string;
 };
 
-const QuestionBlock: FC<Question> = ({
+const QuestionBlock: FC<QuestionBlockProps> = ({
   pager,
   section,
   description,
@@ -26,7 +24,9 @@ const QuestionBlock: FC<Question> = ({
         {description}
       </MaybeBlock>
       <MaybeBlock className="questionBlock_note">{note}</MaybeBlock>
-      <MaybeBlock className="questionBlock_keyStrokes">{keyStrokes}</MaybeBlock>
+      <MaybeBlock className="questionBlock_keyStrokes">
+        {keyStrokes && keyFormattedGroup(keyStrokes)}
+      </MaybeBlock>
     </div>
   );
 };

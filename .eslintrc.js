@@ -17,6 +17,13 @@ module.exports = {
         allowTaggedTemplates: false,
       },
     ],
+    'react/jsx-props-no-spreading': [
+      {
+        html: 'ignore',
+        custom: 'ignore',
+        explicitSpread: 'enforce',
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2020,

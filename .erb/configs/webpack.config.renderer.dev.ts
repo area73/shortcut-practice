@@ -1,3 +1,4 @@
+// @ts-nocheck
 import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
@@ -6,10 +7,10 @@ import chalk from 'chalk';
 import { merge } from 'webpack-merge';
 import { spawn, execSync } from 'child_process';
 import baseConfig from './webpack.config.base';
+// @ts-ignore
 import webpackPaths from './webpack.paths';
 import checkNodeEnv from '../scripts/check-node-env';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-
 
 // When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
 // at the dev webpack config is not accidentally run in a production environment
@@ -77,8 +78,8 @@ export default merge(baseConfig, {
             },
           },
           {
-            loader:'postcss-loader',
-          }
+            loader: 'postcss-loader',
+          },
         ],
       },
       {
@@ -98,8 +99,8 @@ export default merge(baseConfig, {
             },
           },
           {
-            loader:'postcss-loader',
-          }
+            loader: 'postcss-loader',
+          },
         ],
       },
       // SASS support - compile all .global.scss files and pipe it to style.css
@@ -119,8 +120,8 @@ export default merge(baseConfig, {
             loader: 'sass-loader',
           },
           {
-            loader:'postcss-loader',
-          }
+            loader: 'postcss-loader',
+          },
         ],
       },
       // SASS support - compile all other .scss files and pipe it to style.css
@@ -147,8 +148,8 @@ export default merge(baseConfig, {
             loader: 'sass-loader',
           },
           {
-            loader:'postcss-loader',
-          }
+            loader: 'postcss-loader',
+          },
         ],
       },
       // WOFF Font

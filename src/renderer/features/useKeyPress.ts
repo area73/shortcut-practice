@@ -1,31 +1,28 @@
-import { filter, identity, keys, pick, pipe, prop } from 'ramda';
 import { useEffect, useState } from 'react';
-
-// const isSpecialKey = (key: string) => specialKeyMap.has(key);
-
-const code = (keyEvent: KeyboardEvent) => prop('code', keyEvent);
-
-const specialKeys = pipe(
-  pick<string>(['metaKey', 'ctrlKey', 'altKey', 'shiftKey']),
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  filter<string, boolean>(identity),
-  keys
-);
+import { KeyStroke } from 'renderer/mock/shortcuts';
 
 const isSpecialKey = (key: string) =>
   ['Meta', 'Control', 'Alt', 'Shift'].indexOf(key) > -1;
 
-const composeWithSpecialKeys = (keyEvent: KeyboardEvent) => [
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  ...specialKeys(keyEvent),
-  code(keyEvent),
-];
+const composeWithSpecialKeys = ({
+  code,
+  metaKey,
+  shiftKey,
+  altKey,
+  ctrlKey,
+}: KeyboardEvent) => ({
+  code,
+  metaKey,
+  shiftKey,
+  altKey,
+  ctrlKey,
+});
 
 // Hook
 export default function useKeyPress() {
-  const [keyPressed, setKeyPressed] = useState<string[] | undefined>(undefined);
+  const [keyPressed, setKeyPressed] = useState<KeyStroke | undefined>(
+    undefined
+  );
 
   const downHandler = (kev: KeyboardEvent) => {
     setKeyPressed(

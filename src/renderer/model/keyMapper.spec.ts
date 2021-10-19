@@ -24,12 +24,11 @@ describe('keyMapper', () => {
       keyMaps = [
         ['metaKey', 'KeyK'],
         ['metaKey', 'ctrKey', 'altKey', 'shiftKey', 'Digit9'],
-      ]
+      ];
     });
 
     it('should replace metaKey with simbol', () => {
       expect(keyFormattedGroup(keyMaps)).toBe('');
     });
-
   });
 });

@@ -1,6 +1,7 @@
+import { equals, length, whereEq } from 'ramda';
 import { useEffect, useState } from 'react';
 import { hasSameKeys, sameLength } from '../common/utils';
-import mockData, { ShortcutAnswered } from '../mock/shortcuts';
+import mockData, { KeyStroke, ShortcutAnswered } from '../mock/shortcuts';
 import QuestionBlock from './QuestionBlock';
 import useKeyPress from './useKeyPress';
 
@@ -9,18 +10,16 @@ export type States = 'error' | 'success' | 'inProgress' | 'done';
 export default function ShortCutPractice() {
   // TODO: use useQuery to fetch the data
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [pressedKeys, setPressedKeys] = useState<string[][]>([]);
+  const [pressedKeys, setPressedKeys] = useState<KeyStroke[]>([]);
   const [answers, setAnswers] = useState<ShortcutAnswered[]>([]);
   const [, setComponentState] = useState<States>('inProgress');
   const keyPressed = useKeyPress();
 
   const question = mockData[questionIndex];
 
-  const error = !hasSameKeys(pressedKeys, question.keyStrokes);
+  const error = !whereEq(pressedKeys, question.keyStrokes);
 
-  const success =
-    sameLength(pressedKeys, question.keyStrokes) &&
-    hasSameKeys(pressedKeys, question.keyStrokes);
+  const success = equals(pressedKeys, question.keyStrokes);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {

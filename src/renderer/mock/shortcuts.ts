@@ -2,12 +2,20 @@ export type Shortcut = {
   id: string;
   description: string;
   note: string;
-  keyStrokes: string[][];
+  keyStrokes: KeyStroke[];
   section: string;
 };
 
+export type KeyStroke = {
+  code: string;
+  ctrlKey?: boolean | string;
+  metaKey?: boolean | string;
+  shiftKey?: boolean | string;
+  altKey?: boolean | string;
+};
+
 export type ShortcutAnswered = Shortcut & {
-  typedKeyStrokes: string[][];
+  typedKeyStrokes: KeyStroke[];
 };
 
 const mockData: Shortcut[] = [
@@ -15,7 +23,7 @@ const mockData: Shortcut[] = [
     id: '0',
     description: 'Keyboard TEST',
     note: 'esto son unas notas',
-    keyStrokes: [['KeyK'], ['KeyS']],
+    keyStrokes: [{ code: 'KeyK' }, { code: 'KeyS' }],
     section: 'General',
   },
   {
@@ -23,8 +31,8 @@ const mockData: Shortcut[] = [
     description: 'segundo',
     note: 'notas del segundo',
     keyStrokes: [
-      ['metaKey', 'KeyK'],
-      ['metaKey', 'KeyS'],
+      { code: 'KeyK', metaKey: true },
+      { code: 'KeyS', metaKey: true },
     ],
     section: 'General',
   },
@@ -33,8 +41,13 @@ const mockData: Shortcut[] = [
     description: 'Fold all regions',
     note: '',
     keyStrokes: [
-      ['metaKey', 'KeyK'],
-      ['metaKey', 'Digit9'],
+      {
+        code: 'KeyK',
+        metaKey: true,
+        altKey: true,
+        ctrlKey: true,
+        shiftKey: true,
+      },
     ],
     section: 'Basic Editing',
   },
@@ -43,8 +56,8 @@ const mockData: Shortcut[] = [
     description: 'Unfold all regions',
     note: '',
     keyStrokes: [
-      ['metaKey', 'KeyK'],
-      ['metaKey', 'Digit0'],
+      { code: 'KeyS', shiftKey: true },
+      { code: 'KeyS', ctrlKey: true },
     ],
     section: 'Basic Editing',
   },

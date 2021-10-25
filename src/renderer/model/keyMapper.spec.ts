@@ -1,32 +1,24 @@
-import { keyFormattedGroup, specialKeyMap } from './keyMapper';
+import { keyFormattedGroup } from './keyMapper';
 
 describe('keyMapper', () => {
-  describe('When receiving a specialKeyMap', () => {
-    it('Should be a Map object with at least one key', () => {
-      expect(specialKeyMap.size).toBeGreaterThan(0);
-    });
-    it('Should have a key for Meta (Command)', () => {
-      expect(specialKeyMap.get('Meta')).not.toBeNull();
-    });
-    it('Should have a key for Alt (Option)', () => {
-      expect(specialKeyMap.get('Alt')).not.toBeNull();
-    });
-    it('Should have a key for Control', () => {
-      expect(specialKeyMap.get('Control')).not.toBeNull();
-    });
-    it('Should have a key for Shift', () => {
-      expect(specialKeyMap.get('Shift')).not.toBeNull();
-    });
-  });
   describe('When keyFormattedGroup', () => {
-    let keyMaps: string[][];
-    beforeEach(() => {
-      keyMaps = [
-        ['metaKey', 'KeyK'],
-        ['metaKey', 'ctrKey', 'altKey', 'shiftKey', 'Digit9'],
-      ];
-    });
-
+    const keyMaps = [
+      {
+        code: 'keyK',
+        ctrlKey: false,
+        metaKey: false,
+        shiftKey: false,
+        altKey: false,
+      },
+      {
+        code: 'keyK',
+        ctrlKey: true,
+        metaKey: true,
+        shiftKey: true,
+        altKey: true,
+      },
+    ];
+    // TODO
     it('should replace metaKey with simbol', () => {
       expect(keyFormattedGroup(keyMaps)).toBe('');
     });

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Shortcut } from 'renderer/mock/shortcuts';
+import { KeyStroke, Shortcut } from 'renderer/mock/shortcuts';
 import { keyFormattedGroup } from 'renderer/model/keyMapper';
 import MaybeBlock from './MaybeBlock';
 import classnames from 'classNames';
@@ -9,7 +9,7 @@ import { always, cond, equals } from 'ramda';
 
 export type QuestionBlockProps = Partial<Shortcut> & {
   pager?: string;
-  typedKeys?: string;
+  typedKeys?: KeyStroke[];
 };
 
 const QuestionBlock: FC<QuestionBlockProps> = ({
@@ -20,7 +20,6 @@ const QuestionBlock: FC<QuestionBlockProps> = ({
   keyStrokes,
   typedKeys,
 }) => {
-
   const bgColor = cond([
     [equals(keyStrokes === typedKeys), always('bg-green-200')],
     [equals(keyStrokes !== typedKeys), always('bg-green-200')],
@@ -35,7 +34,7 @@ const QuestionBlock: FC<QuestionBlockProps> = ({
     'w-32',
     'p-4',
     'border-4',
-     bgColor
+    bgColor
   );
 
   return (

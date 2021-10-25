@@ -1,6 +1,7 @@
-import { equals, length, whereEq } from 'ramda';
+// @ts-nocheck
+import { equals, map, whereEq } from 'ramda';
 import { useEffect, useState } from 'react';
-import { hasSameKeys, sameLength } from '../common/utils';
+import { keyTransformed } from 'renderer/model/keyMapper';
 import mockData, { KeyStroke, ShortcutAnswered } from '../mock/shortcuts';
 import QuestionBlock from './QuestionBlock';
 import useKeyPress from './useKeyPress';
@@ -17,13 +18,21 @@ export default function ShortCutPractice() {
 
   const question = mockData[questionIndex];
 
-  const error = !whereEq(pressedKeys, question.keyStrokes);
+  const error = !whereEq(
+    map(keyTransformed)(pressedKeys),
+    map(keyTransformed)(question.keyStrokes)
+  );
 
-  const success = equals(pressedKeys, question.keyStrokes);
+  console.log(error, pressedKeys, map(keyTransformed)(question.keyStrokes)); // --> pressedKeys ==> {objeto KeyK} / --> {code: K}
+
+  const success = equals(
+    map(keyTransformed)(pressedKeys),
+    map(keyTransformed)(question.keyStrokes)
+  );
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    keyPressed && setPressedKeys([...pressedKeys, keyPressed]);
+    keyPressed && setPressedKeys([...pressedKeys, keyTransformed(keyPressed)]);
   }, [keyPressed]);
 
   const getNextQuestion = () =>
@@ -69,23 +78,11 @@ export default function ShortCutPractice() {
       <div className="answers" style={{ overflow: 'auto', height: '400px' }}>
         {answers
           .map((answer) => (
-            <div
-              key={answer.id}
-              style={{
-                border: '1px solid #000',
-                backgroundColor:
-                  JSON.stringify(answer.keyStrokes) ===
-                  JSON.stringify(answer.typedKeyStrokes)
-                    ? '#0f0'
-                    : '#f00',
-              }}
-            >
-              <p>section: {answer.section}</p>
-              <p>description: {answer.description}</p>
-              <p>note: {answer.note}</p>
-              <p>keyStrokes: {answer.keyStrokes}</p>
-              <p>typedKeyStrokes: {answer.typedKeyStrokes}</p>
-            </div>
+            <QuestionBlock
+              {...question}
+              typedKeys={answer.typedKeyStrokes}
+              key={question.id}
+            />
           ))
           .reverse()}
       </div>

@@ -1,6 +1,5 @@
-import { flow } from 'fp-ts/function';
-import { map, pipe, prop, reduce } from 'ramda';
-import { KeyStroke, Shortcut } from 'renderer/mock/shortcuts';
+import { join, map, pipe, values, isNil, reject } from 'ramda';
+import { KeyStroke } from 'renderer/mock/shortcuts';
 
 // const getValueFromSpecialKeyMap = getMap(specialKeyMap);
 const replace = (subStr: string, replacer: string) => (str: string) =>
@@ -11,10 +10,10 @@ const removeKey = replace('Key', '');
 const removeDigit = replace('Digit', '');
 
 const changeProp =
-  (key: keyof KeyStroke, value: string) => (obj: KeyStroke) => {
-    obj[key] && (obj[key] = value);
-    return obj;
-  };
+  (key: keyof KeyStroke, value: string) => (obj: KeyStroke) => ({
+    ...obj,
+    [key]: value,
+  });
 
 const getShiftSymbol = changeProp('shiftKey', '⇧');
 const getAltSymbol = changeProp('altKey', '⌥');
@@ -26,13 +25,19 @@ const formatCodeKey = (obj: KeyStroke) => {
   return obj;
 };
 
-const keyFormattedGroup = (keys: KeyStroke[]) =>
-  flow(
-    map(getShiftSymbol),
-    map(getAltSymbol),
-    map(getCtrlSymbol),
-    map(getMetaSymbol),
-    map(formatCodeKey)
-  )(keys);
+const keyTransformed = pipe(
+  getShiftSymbol,
+  getAltSymbol,
+  getCtrlSymbol,
+  getMetaSymbol,
+  formatCodeKey,
+  reject(isNil)
+);
 
-export { keyFormattedGroup };
+const keyFormattedGroup = pipe(
+  map(keyTransformed),
+  map(pipe(values, join(''))),
+  join(',')
+);
+
+export { keyFormattedGroup, keyTransformed };

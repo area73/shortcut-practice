@@ -8,10 +8,10 @@ export type Shortcut = {
 
 export type KeyStroke = {
   code: string;
-  ctrlKey?: boolean | string;
-  metaKey?: boolean | string;
-  shiftKey?: boolean | string;
-  altKey?: boolean | string;
+  ctrlKey: boolean | '⌃';
+  metaKey: boolean | '⌘';
+  shiftKey: boolean | '⇧';
+  altKey: boolean | '⌥';
 };
 
 export type ShortcutAnswered = Shortcut & {
@@ -23,7 +23,22 @@ const mockData: Shortcut[] = [
     id: '0',
     description: 'Keyboard TEST',
     note: 'esto son unas notas',
-    keyStrokes: [{ code: 'KeyK' }, { code: 'KeyS' }],
+    keyStrokes: [
+      {
+        code: 'KeyL',
+        metaKey: false,
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+      },
+      {
+        code: 'KeyS',
+        metaKey: false,
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+      },
+    ],
     section: 'General',
   },
   {
@@ -31,8 +46,20 @@ const mockData: Shortcut[] = [
     description: 'segundo',
     note: 'notas del segundo',
     keyStrokes: [
-      { code: 'KeyK', metaKey: true },
-      { code: 'KeyS', metaKey: true },
+      {
+        code: 'KeyK',
+        metaKey: false,
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+      },
+      {
+        code: 'KeyS',
+        metaKey: false,
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+      },
     ],
     section: 'General',
   },
@@ -56,8 +83,20 @@ const mockData: Shortcut[] = [
     description: 'Unfold all regions',
     note: '',
     keyStrokes: [
-      { code: 'KeyS', shiftKey: true },
-      { code: 'KeyS', ctrlKey: true },
+      {
+        code: 'KeyS',
+        metaKey: false,
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+      },
+      {
+        code: 'KeyS',
+        metaKey: false,
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+      },
     ],
     section: 'Basic Editing',
   },

@@ -1,6 +1,3 @@
-import { KeyStroke, Shortcut } from './../mock/shortcuts';
-import { equals, length } from 'ramda';
-
 // export const hasSameKeys = (prev: KeyStroke[], next: KeyStroke[]) =>
 //   prev.reduce((acc, cur, idx) => (equals(cur, next[idx]) ? acc : false), true);
 
